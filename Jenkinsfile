@@ -14,9 +14,12 @@ pipeline {
            }
        }
        stage('Build') {
-               steps{
-                   sh 'mvn clean verify'
-                  }
+          steps{
+             sh 'mvn clean verify'
+            junit 'target/surefire-reports/*.xml'
+            publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]//this gives a coverage report nice graphical interface to fe tests
+
           }
+       }
     }
 }
